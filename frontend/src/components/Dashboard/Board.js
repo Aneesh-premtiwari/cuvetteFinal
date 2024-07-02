@@ -1,22 +1,16 @@
-import React, { useState, useEffect } from "react";
 import {
-  Card,
-  CardContent,
-  CardActions,
   IconButton,
   Box,
   Typography,
   Grid,
-  Collapse,
   Checkbox,
-  FormControlLabel,
   Modal,
   Button,
   TextField,
   Autocomplete,
 } from "@mui/material";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { format } from "date-fns";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const TaskCard = ({ priority, title, list, dueDate, changeStatus, row }) => {
@@ -30,15 +24,20 @@ const TaskCard = ({ priority, title, list, dueDate, changeStatus, row }) => {
   const [checkedItems, setCheckedItems] = useState([...tt]);
 
   const [checked, setChecked] = useState(-1);
-  // console.log("ddd=", priority, title, list, dueDate, checkedItems);
+
   return (
-    <Card sx={{ margin: "16px" }}>
-      <CardContent>
-        <Box display="flex" alignItems="center" justifyContent="space-between">
+    <div className="card" style={{ margin: "16px" }}>
+      <div className="card-content">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           {priority == "medium" && (
-            <Button
-              // variant="body1"
-              sx={{
+            <button
+              style={{
                 backgroundColor: "#1857de",
                 color: "white",
                 padding: "4px 8px",
@@ -48,12 +47,11 @@ const TaskCard = ({ priority, title, list, dueDate, changeStatus, row }) => {
               }}
             >
               medium priority
-            </Button>
+            </button>
           )}
           {priority == "low" && (
-            <Button
-              // variant="body1"
-              sx={{
+            <button
+              style={{
                 backgroundColor: "#18de1c",
                 color: "white",
                 padding: "4px 8px",
@@ -63,12 +61,11 @@ const TaskCard = ({ priority, title, list, dueDate, changeStatus, row }) => {
               }}
             >
               low priority
-            </Button>
+            </button>
           )}
           {priority == "high" && (
-            <Button
-              // variant="body1"
-              sx={{
+            <button
+              style={{
                 backgroundColor: "#de1829",
                 color: "white",
                 padding: "4px 8px",
@@ -78,63 +75,65 @@ const TaskCard = ({ priority, title, list, dueDate, changeStatus, row }) => {
               }}
             >
               high priority
-            </Button>
+            </button>
           )}
-
-          <Button>...</Button>
-        </Box>
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Typography variant="h5">{title}</Typography>
-          <IconButton onClick={handleExpandClick}>
+          <button>...</button>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <h5>{title}</h5>
+          <button onClick={handleExpandClick}>
             {expanded ? <span>- </span> : <span>+ </span>}
-          </IconButton>
-        </Box>
-        <Box variant="h6">Checklist</Box>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <Box
-            sx={{
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              padding: "8px",
-              marginTop: "8px",
-            }}
-          >
-            {checkedItems.map((v, i) => (
-              <Box
-                key={i}
-                sx={{
-                  border: "1px solid #ccc",
-                  borderRadius: "8px",
-                  padding: "8px",
-                  marginBottom: "4px",
-                }}
-              >
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={i == checked}
-                      onChange={() => setChecked(i)}
-                    />
-                  }
-                  label={v}
-                  sx={{ display: "block", margin: "4px 0" }}
+          </button>
+        </div>
+        <div style={{ fontSize: "0.8rem" }}>Checklist</div>
+        <div
+          style={{
+            display: expanded ? "block" : "none",
+            border: "1px solid #ccc",
+            borderRadius: "8px",
+            padding: "8px",
+            marginTop: "8px",
+          }}
+        >
+          {checkedItems.map((v, i) => (
+            <div
+              key={i}
+              style={{
+                border: "1px solid #ccc",
+                borderRadius: "8px",
+                padding: "8px",
+                marginBottom: "4px",
+              }}
+            >
+              <label>
+                <input
+                  type="checkbox"
+                  checked={i == checked}
+                  onChange={() => setChecked(i)}
                 />
-              </Box>
-            ))}
-          </Box>
-        </Collapse>
-      </CardContent>
-      <CardActions
-        sx={{
+                {v}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div
+        className="card-actions"
+        style={{
           flexDirection: "column",
           alignItems: "flex-start",
           padding: "16px",
         }}
       >
-        <Box display="flex" alignItems="center">
-          <Typography
-            variant="body1"
-            sx={{
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <span
+            style={{
               backgroundColor: "white",
               color: "black",
               padding: "4px 8px",
@@ -144,148 +143,148 @@ const TaskCard = ({ priority, title, list, dueDate, changeStatus, row }) => {
             }}
           >
             Due Date:
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              backgroundColor: "red",
-              color: "white",
+          </span>
+          <span
+           style={{
+            backgroundColor: "red",
+            color: "white",
+            padding: "4px 8px",
+            borderRadius: "4px",
+            fontSize: "0.7rem",
+          }}
+        >
+          {format(dueDate, "dd MMM yyyy")}
+        </span>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          marginTop: "5px",
+          marginRight: "10px",
+        }}
+      >
+        {row.status != "inprogress" && (
+          <button
+            style={{
+              backgroundColor: "#decdcc",
+              color: "black",
               padding: "4px 8px",
               borderRadius: "4px",
-              fontSize: "0.7rem",
+              fontSize: "0.5rem",
+              margin: "1px",
+            }}
+            onClick={() => changeStatus("inprogress", row)}
+          >
+            InProgress
+          </button>
+        )}
+
+        {row.status != "todo" && (
+          <button
+            // variant=""
+            onClick={() => changeStatus("todo", row)}
+            style={{
+              backgroundColor: "#decdcc",
+              color: "black",
+              padding: "4px 8px",
+              borderRadius: "4px",
+              fontSize: "0.5rem",
+              margin: "1px",
             }}
           >
-            {format(dueDate, "dd MMM yyyy")}
-          </Typography>
-        </Box>
-        <Box
-          display="flex"
-          alignItems="center"
-          sx={{ marginTop: "5px", marginRight: "10px" }}
-        >
-          {row.status != "inprogress" && (
-            <Button
-              // variant="body1"
-              // size="small"
-              onClick={() => changeStatus("inprogress", row)}
-              sx={{
-                backgroundColor: "#decdcc",
-                color: "black",
-                padding: "4px 8px",
-                borderRadius: "4px",
-                fontSize: "0.5rem",
-                margin: "1px",
-              }}
-            >
-              InProgress
-            </Button>
-          )}
-          {row.status != "todo" && (
-            <Button
-              // variant=""
-              onClick={() => changeStatus("todo", row)}
-              sx={{
-                backgroundColor: "#decdcc",
-                color: "black",
-                padding: "4px 8px",
-                borderRadius: "4px",
-                margin: "1px",
-                fontSize: "0.5rem",
-              }}
-            >
-              To do
-            </Button>
-          )}
-          {row.status != "done" && (
-            <Button
-              // variant="body1"
-              onClick={() => changeStatus("done", row)}
-              sx={{
-                backgroundColor: "#decdcc",
-                color: "black",
-                padding: "4px 8px",
-                borderRadius: "4px",
-                fontSize: "0.5rem",
-                margin: "2px",
-              }}
-            >
-              Done
-            </Button>
-          )}
-          {row.status != "backlog" && (
-            <Button
-              // variant="body1"
-              onClick={() => changeStatus("backlog", row)}
-              sx={{
-                backgroundColor: "#decdcc",
-                color: "black",
-                padding: "4px 8px",
-                fontSize: "0.5rem",
-                borderRadius: "4px",
-                margin: "2px",
-              }}
-            >
-              backlog
-            </Button>
-          )}
-        </Box>
-      </CardActions>
-    </Card>
-  );
+            To do
+          </button>
+        )}
+        {row.status != "done" && (
+          <button
+            onClick={() => changeStatus("done", row)}
+            style={{
+              backgroundColor: "#decdcc",
+              color: "black",
+              padding: "4px 8px",
+              borderRadius: "4px",
+              fontSize: "0.5rem",
+              margin: "1px",
+            }}
+          >
+            Done
+          </button>
+        )}
+        {row.status != "backlog" && (
+          <button
+            // variant="body1"
+            onClick={() => changeStatus("backlog", row)}
+            style={{
+              backgroundColor: "#decdcc",
+              color: "black",
+              padding: "4px 8px",
+              borderRadius: "4px",
+              fontSize: "0.5rem",
+              margin: "1px",
+            }}
+          >
+            backlog
+          </button>
+        )}
+      </div>
+    </div>
+  </div>
+);
 };
 
 const Board = () => {
-  const navigate = useNavigate();
-  const sections = ["Backlog", "To-Do", "In-Progress", "Done"];
-  const currentDate = new Date();
-  const formattedDate = format(currentDate, "do MMMM yyyy");
-  const [open, setOpen] = useState(false);
-  const [newTask, setNewTask] = useState("");
-  const [priority, setPriority] = useState("");
-  const [assignee, setAssignee] = useState("");
-  const [dueDate, setDueDate] = useState(currentDate);
-  const [currDueDate, setCurrDueDate] = useState(new Date());
-  const [emailOptions, setEmailOptions] = useState([]);
+const navigate = useNavigate();
+const sections = ["Backlog", "To-Do", "In-Progress", "Done"];
+const currentDate = new Date();
+const formattedDate = format(currentDate, "do MMMM yyyy");
+const [open, setOpen] = useState(false);
+const [newTask, setNewTask] = useState("");
+const [priority, setPriority] = useState("");
+const [assignee, setAssignee] = useState("");
+const [dueDate, setDueDate] = useState(currentDate);
+const [currDueDate, setCurrDueDate] = useState(new Date());
+const [emailOptions, setEmailOptions] = useState([]);
 
-  const [checklist, setChecklist] = useState([
-    { id: 1, value: "", checked: false },
-  ]);
+const [checklist, setChecklist] = useState([
+  { id: 1, value: "", checked: false },
+]);
 
-  const [todo, setTodo] = useState([]);
-  const [inpro, setInpro] = useState([]);
-  const [done, setDone] = useState([]);
-  const [back, setBack] = useState([]);
+const [todo, setTodo] = useState([]);
+const [inpro, setInpro] = useState([]);
+const [done, setDone] = useState([]);
+const [back, setBack] = useState([]);
 
-  const getAssignee = async () => {
-    try {
-      const data = await axios.get("http://localhost:5000/api/users", {
-        headers: {
-          "x-auth-token": localStorage.getItem("token"),
-        },
-      });
-      const t = [];
-      const pp = data.data;
-      pp.map((v, i) => t.push(v.email));
-      setEmailOptions(t);
-    } catch {
-      console.log("got error while getting assignee");
-    }
-  };
+const getAssignee = async () => {
+  try {
+    const data = await axios.get("http://localhost:5000/api/users", {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
+    });
+    const t = [];
+    const pp = data.data;
+    pp.map((v, i) => t.push(v.email));
+    setEmailOptions(t);
+  } catch {
+    console.log("got error while getting assignee");
+  }
+};
 
-  const getApiData = async () => {
-    try {
-      const p = await axios.get("http://localhost:5000/api/", {
-        headers: {
-          "x-auth-token": localStorage.getItem("token"),
-        },
-      });
-      const dddd = p.data;
-      const t = [];
-      const ii = [];
-      const d = [];
-      const b = [];
-      dddd.forEach((v, i) => {
-        if (v.status == "todo") t.push(v);
+const getApiData = async () => {
+  try {
+    const p = await axios.get("http://localhost:5000/api/", {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
+    });
+    const dddd = p.data;
+    const t = [];
+    const ii = [];
+    const d = [];
+    const b = [];
+    dddd.forEach((v, i) => {
+      if (v.status == "todo") t.push(v);
         if (v.status == "done") d.push(v);
         if (v.status == "inprogress") ii.push(v);
         if (v.status == "backlog") b.push(v);
@@ -322,12 +321,6 @@ const Board = () => {
     } catch {
       console.log("error while changing status");
     }
-  };
-  const logout = () => {
-    localStorage.removeItem("email");
-    localStorage.removeItem("name");
-    localStorage.removeItem("token");
-    navigate("/");
   };
 
   useEffect(() => {
@@ -407,9 +400,8 @@ const Board = () => {
         alignItems="center"
         mb={2}
       >
-        <Typography variant="h6">
-          Welcome {localStorage.getItem("name")}
-        </Typography>
+        {" "}
+        <h2>Welcome {localStorage.getItem("name")}</h2>
         <Box
           display="flex"
           flexDirection="column"
@@ -417,9 +409,6 @@ const Board = () => {
           alignItems="center"
         >
           <Typography variant="h6">{formattedDate}</Typography>
-          <Button variant="contained" onClick={() => logout()}>
-            Logout
-          </Button>
         </Box>
       </Box>
       <Typography variant="h4" gutterBottom>
@@ -431,14 +420,14 @@ const Board = () => {
             <Box
               sx={{
                 backgroundColor: "#c7bfbf",
-                padding: "6px",
-                borderRadius: "8px",
+                padding: "100px",
+                borderRadius: "3px",
                 position: "relative",
+                height: "100%",
               }}
             >
-              <Typography variant="h6" sx={{ marginBottom: "16px" }}>
-                {section}
-              </Typography>
+              <h4 style={{position:"absolute", top:"2%", left:"40%"}}>{section}</h4>
+
               {section === "To-Do" && (
                 <IconButton
                   sx={{ position: "absolute", top: "16px", right: "16px" }}
@@ -576,7 +565,7 @@ const Board = () => {
             )}
           />
           <Box sx={{ marginBottom: "16px" }}>
-            <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" gutterBottom>
               Checklist
             </Typography>
             {checklist.map((item, index) => (

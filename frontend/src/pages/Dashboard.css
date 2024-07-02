@@ -27,3 +27,8 @@
 button {
   margin-left: 10px;
 }
+
+.nav-link:hover {
+  background-color: #4391ED;
+  color: #FFFFFF;
+}

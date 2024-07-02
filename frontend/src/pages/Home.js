@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import logo from "../assets/logo.png"; // Ensure you have a logo image in this path
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png.jpeg";
+import back from "../assets/back.png.jpeg";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [email, setEmail] = useState("");
@@ -33,75 +32,130 @@ const Home = () => {
   };
 
   return (
-    <Box display="flex" height="100vh">
-      <Box
-        width="60%"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        bgcolor="#f4f4f4"
+    <div style={{ display: "flex", height: "100vh" }}>
+      <div
+        style={{
+          width: "60%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#17A2B8",
+          padding: "40px",
+          color: "white",
+        }}
       >
-        <img src={logo} alt="logo" style={{ width: "50%", height: "auto" }} />
-      </Box>
-      <Box
-        width="40%"
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        padding={4}
+        <div
+          style={{
+            position: "relative",
+          }}
+        >
+          <img
+            src={back}
+            alt="back"
+            style={{
+              width: "78%",
+              height: "auto",
+            }}
+          />
+          <img
+            src={logo}
+            alt="logo"
+            style={{
+              position: "absolute",
+              top: "60%",
+              left: "33%",
+              transform: "translate(-50%, -50%)",
+              width: "97%",
+              height: "auto",
+             
+              borderRadius: "10px", // Add a rounded corner to the logo
+            }}
+          />
+        </div>
+        <h2 style={{ color: "white", margin:"57px" }}>Welcome aboard my friend</h2>
+        <p style={{ color: "white", margin:"-47px" }}>Just a couple of clicks and we start</p>
+      </div>
+      <div
+        style={{
+          width: "60%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "40px",
+        }}
       >
-        <Typography variant="h4" gutterBottom>
-          Login
-        </Typography>
-        <TextField
-          label="Email"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <TextField
-          label="Password"
-          type="password"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={handleLogin}
-        >
-          Login
-        </Button>
-        <Typography
-          variant="body1"
-          sx={{ marginTop: "16px", textAlign: "center" }}
-        >
-          Don't have an account?
-          <Box
-            component={Link}
-            to="/signup"
-            sx={{
-              display: "block",
-              marginTop: "8px",
-              backgroundColor: "#1976d2",
+        <h2 style={{ marginBottom: "20px" }}>Login</h2>
+        <form>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            style={{
+              width: "100%",
+              padding: "12px",
+              marginTop: "45px",
+              border: "1px solid #ccc",
+              borderRadius: "7px",
+            }}
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            style={{
+              width: "100%",
+              padding: "12px",
+              marginTop: "20px",
+              border: "1px solid #ccc",
+              borderRadius: "7px",
+            }}
+          />
+          <button
+            style={{
+              width: "100%",
+              padding: "12px",
+              backgroundColor:"#17A2B8" ,
               color: "white",
-              padding: "8px 16px",
-              borderRadius: "4px",
-              textDecoration: "none",
+              border: "none",
+              borderRadius: "23px",
+              cursor: "pointer",
+              marginTop: "24px",
+            }}
+            onClick={handleLogin}
+          >
+            Login
+          </button>
+          <p
+            style={{
+              marginTop: "45px",
+              textAlign: "center",
             }}
           >
-            Sign Up
-          </Box>
-        </Typography>
-      </Box>
-    </Box>
+           Have no account yet?
+          </p>
+          <button
+            style={{
+              width: "100%",
+              padding: "12px",
+             margin:"2px",
+             color: "#17A2BB",
+              // border: "none",
+              borderRadius: "23px",
+              cursor: "pointer",
+              borderColor:"#17A2BB",
+             
+            }}
+            onClick={()=> navigate("/signup")}
+          >
+            Register
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 

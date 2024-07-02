@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Signup from "./components/Auth/Signup";
 import Dashboard from "./pages/Dashboard";
-import Board from "./components/dashboard/Board";
-import Analytics from "./components/dashboard/Analytics";
-import Settings from "./components/dashboard/Setting";
+import Board from "./components/Dashboard/Board";
+import Analytics from "./components/Dashboard/Analytics";
+import Settings from "./components/Dashboard/Setting";
 
 const App = () => {
   return (
