@@ -2,9 +2,9 @@ import React from "react";
 import "./Dashboard.css";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import logoutImg from "../assets/log out.jpeg"; 
+import logoutImg from "../assets/log out.png"; 
 import { useNavigate } from "react-router-dom";
-import logo1 from "../assets/logo1.png.jpeg";
+import logo1 from "../assets/logo1.png";
 
 const Dashboard = () => {
   const navigate = useNavigate();
